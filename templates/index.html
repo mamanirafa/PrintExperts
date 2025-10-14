@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Motor Experto de Diagnóstico</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        .container { max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .error { color: red; font-weight: bold; margin-bottom: 10px; }
+        .step { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 4px; }
+        .question-group { margin-bottom: 20px; }
+        .question-group label { font-weight: bold; display: block; margin-bottom: 5px; }
+        .diagnosis-result { background-color: #f9f9f9; padding: 15px; border-radius: 4px; border-left: 5px solid #4CAF50; }
+        .trazability { margin-top: 30px; border-top: 1px solid #ccc; padding-top: 15px; }
+        .trazability-item { margin-bottom: 10px; padding: 10px; border: 1px dashed #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Motor Experto de Diagnóstico de Errores</h1>
+        
+        {% if error %}
+            <p class="error">Error: {{ error }}</p>
+        {% endif %}
+
+        {% if step == 1 %}
+            <div class="step">
+                <h2>Paso 1: Seleccione la Categoría</h2>
+                <form method="POST">
+                    <label for="category_choice">Elige la categoría:</label>
+                    <select name="category_choice" id="category_choice" required>
+                        <option value="">-- Selecciona una opción --</option>
+                        {% for cat in categories %}
+                            <option value="{{ loop.index }}">{{ loop.index }}) {{ cat }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Continuar</button>
+                </form>
+            </div>
+
+        {% elif step == 2 %}
+            <div class="step">
+                <h2>Paso 2: Seleccione el Síntoma Observable (Problema)</h2>
+                <p>Categoría seleccionada: <strong>{{ selected_cat }}</strong></p>
+                <form method="POST">
+                    <label for="observable_choice">Elige el síntoma:</label>
+                    <select name="observable_choice" id="observable_choice" required>
+                        <option value="">-- Selecciona una opción --</option>
+                        {% for obs in observables %}
+                            <option value="{{ loop.index }}">{{ loop.index }}) {{ obs }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Continuar</button>
+                </form>
+            </div>
+
+        {% elif step == 3 %}
+            <div class="step">
+                <h2>Paso 3: Responda las Preguntas</h2>
+                <p>Categoría: <strong>{{ session.selected_cat }}</strong> | Síntoma: <strong>{{ session.selected_obs }}</strong></p>
+                
+                <form method="POST">
+                    {% for q in questions %}
+                        <div class="question-group">
+                            <label>{{ q.texto }}</label>
+                            
+                            {% set key = q.clave if q.clave else q.texto | lower | replace(' ', '_') %}
+                            
+                            {% if q.tipo == "si_no" %}
+                                <input type="checkbox" name="{{ key }}" id="{{ key }}"> 
+                                <label for="{{ key }}">Sí</label>
+                                <small> (Marcar para "Sí", desmarcar para "No")</small>
+                            
+                            {% elif q.tipo == "opcion_multiple" and q.opciones %}
+                                {% for opt in q.opciones %}
+                                    <input type="radio" name="{{ key }}" value="{{ opt }}" id="{{ key }}_{{ loop.index }}" required>
+                                    <label for="{{ key }}_{{ loop.index }}">{{ opt }}</label>
+                                {% endfor %}
+                            
+                            {% else %}
+                                <input type="text" name="{{ key }}" placeholder="Escribe tu respuesta...">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit">Obtener Diagnóstico</button>
+                </form>
+            </div>
+
+        {% elif step == 4 %}
+            <div class="step diagnosis-result">
+                <h2>Diagnóstico Final 🩺</h2>
+                <p>Síntoma: <strong>{{ session.selected_obs }}</strong></p>
+                <p>Causa probable: <strong>{{ diagnostico.causa_probable | replace('_', ' ') }}</strong></p>
+                
+                <h3>Acciones Sugeridas:</h3>
+                <ul>
+                {% for acc in diagnostico.acciones %}
+                    <li>{{ acc }}</li>
+                {% endfor %}
+                </ul>
+                
+                {% if diagnostico.recomendada_para_usuario %}
+                    <h3>Sugerencia para el Usuario:</h3>
+                    <p>{{ diagnostico.recomendada_para_usuario }}</p>
+                {% endif %}
+            </div>
+
+            <div class="trazability">
+                <h3>Trazabilidad de la Inferencia:</h3>
+                {% for t in diagnostico.traza %}
+                    <div class="trazability-item">
+                        <p><strong>Hipótesis: {{ t.hipotesis | replace('_', ' ') }}</strong> | Aceptada: <strong>{{ 'Sí' if t.aceptada else 'No' }}</strong></p>
+                        <p>Razón: {{ t.razon }}</p>
+                        <details>
+                            <summary>Detalles de Evaluación</summary>
+                            <p><strong>Premisas Evaluadas:</strong></p>
+                            <ul>
+                            {% for k, v in t.premisas_evaluadas.items() %}
+                                <li>{{ k | replace('_', ' ') }}: {{ v if v is not none else 'No respondida' }}</li>
+                            {% endfor %}
+                            </ul>
+                            <p><strong>Respuestas de Preguntas de Regla:</strong></p>
+                            <ul>
+                            {% for r in t.respuestas_regla %}
+                                <li>{{ r.pregunta }}: <strong>{{ r.respuesta }}</strong> (Usada: {{ 'Sí' if r.usada else 'No' }})</li>
+                            {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <p><a href="{{ url_for('select_category') }}">Iniciar un nuevo diagnóstico</a></p>
+
+        {% endif %}
+        
+    </div>
+</body>
+</html>
