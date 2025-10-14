@@ -7,8 +7,8 @@ Rafael Mamani<br>
 Nicolas Cussi
 
 #### Consigna<br>
-Trabajo Práctico 5 — Diagnóstico de problemas de impresoras Contexto: Sistema experto para identificar fallas en impresoras (atascos, tinta, conexión).
- Objetivos:
- • Hechos de entrada: impresora no imprime, luces LED, errores en pantalla
- • 5–7 reglas de diagnóstico • Endpoint FastAPI para recibir reporte de usuario y devolver posible causa
-Desafío: Incluir un módulo de verificación automática que simule la revisión de estado de la impresora.
+Trabajo Práctico 5 — Diagnóstico de problemas de impresoras Contexto: Sistema experto para identificar fallas en impresoras (atascos, tinta, conexión).  
+ Objetivos:  
+ • Hechos de entrada: impresora no imprime, luces LED, errores en pantalla  
+ • 5–7 reglas de diagnóstico • Endpoint FastAPI para recibir reporte de usuario y devolver posible causa  
+Desafío: Incluir un módulo de verificación automática que simule la revisión de estado de la impresora.  
