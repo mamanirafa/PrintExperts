@@ -5,3 +5,5 @@ Este es el repositorio para el trabajo de Desarrollo de sistema de IA de la tecn
 Santiago Oroz<br>
 Rafael Mamani<br>
 Nicolas Cussi
+
+#### Consigna<br>
