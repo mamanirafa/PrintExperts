@@ -1,0 +1,463 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+/* Header fijo */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #0c9aaf 0%, #454748 100%);
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.add-knowledge-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.add-knowledge-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.main-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #e6f1ff 0%, #0c9aaf 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #18293f;
+}
+
+.card-subtitle {
+    font-size: 16px;
+    color: #828181;
+    font-weight: 400;
+}
+
+.card-content {
+    padding: 40px;
+}
+
+.error {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.step {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-left: 5px solid #0c9aaf;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.step h2 {
+    color: #18293f;
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.question-group {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.question-group label {
+    color: #18293f;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #0c9aaf;
+    box-shadow: 0 0 0 3px rgba(12, 154, 175, 0.1);
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.checkbox-label, .radio-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button {
+    background: linear-gradient(135deg, #0c9aaf 0%, #454748 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(12, 154, 175, 0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(12, 154, 175, 0.4);
+}
+
+.butcontinue {
+    margin-top: 10px;
+}
+
+/* Estilos para el formulario de agregar conocimiento */
+.knowledge-form {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-left: 5px solid #0c9aaf;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    color: #18293f;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.form-group select, .form-group input[type="text"], .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: inherit;
+}
+
+.form-group select:focus, .form-group input[type="text"]:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #0c9aaf;
+    box-shadow: 0 0 0 3px rgba(12, 154, 175, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.add-knowledge-btn-main {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    width: 100%;
+}
+
+.add-knowledge-btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.add-knowledge-btn-main:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.existing-options {
+    background: #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.existing-options h4 {
+    color: #18293f;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.existing-options ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.existing-options li {
+    padding: 5px 10px;
+    background: white;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #454748;
+}
+
+.existing-options li:last-child {
+    margin-bottom: 0;
+}
+
+.diagnosis-result {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 5px solid #28a745;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+}
+
+.diagnosis-result h2 {
+    color: #18293f;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.diagnosis-result h3 {
+    color: #18293f;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+}
+
+.diagnosis-result ul {
+    margin-left: 20px;
+}
+
+.diagnosis-result li {
+    margin-bottom: 8px;
+    color: #454748;
+}
+
+.trazability {
+    margin-top: 30px;
+    border-top: 2px solid #e9ecef;
+    padding-top: 30px;
+}
+
+.trazability h3 {
+    color: #18293f;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.trazability-item {
+    background: #f8f9fa;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.trazability-item p {
+    margin-bottom: 10px;
+    color: #454748;
+}
+
+.trazability-item strong {
+    color: #18293f;
+}
+
+details {
+    margin-top: 15px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #0c9aaf;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
+}
+
+details[open] summary {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+details ul {
+    background: white;
+    padding: 15px;
+    margin: 0;
+    border: 1px solid #e9ecef;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+}
+
+.new-diagnosis-link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.new-diagnosis-link a {
+    color: #0c9aaf;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #0c9aaf;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.new-diagnosis-link a:hover {
+    background: #0c9aaf;
+    color: white;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.kb-status {
+    font-size: 14px;
+    color: #e9ecef;
+    text-align: center;
+}
+.kb-status strong {
+    color: #ffffff;
+}
+.kb-status a {
+    color: #0c9aaf;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .step {
+        padding: 20px;
+    }
+}

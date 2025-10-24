@@ -1,0 +1,890 @@
+{
+  "categorias": {
+    "Conectividad/Software": [
+      "Impresora marcada como 'Offline' en la computadora",
+      "Retraso notable en el inicio de la impresión o después de enviar el trabajo",
+      "El archivo de impresión no se imprime (permanece en la cola de impresión)",
+      "Aparece un mensaje de 'Error de comunicación' en PC o impresora",
+      "Mensaje 'Documento no se pudo imprimir'",
+      "La impresora es invisible en la red o no aparece como opción de impresión",
+      "Sale un mono purpura diciendo negandote acceso",
+      "Sale un mono purpura diciendovsvd"
+    ],
+    "Suministros": [
+      "Mensaje 'Nivel de tinta o tóner bajo' o 'Cartucho vacío'",
+      "La impresora muestra una luz de tinta/tóner roja o naranja parpadeante",
+      "Mensaje 'Cartucho no reconocido'",
+      "Mensaje 'Servicio Requerido' o 'Almohadilla de tinta al final de su vida útil'"
+    ],
+    "Mecánica/Atascos": [
+      "Papel atascado visible en la bandeja de salida o en el recorrido",
+      "La impresora hace ruido (chasquidos o rechinidos) y no recoge el papel",
+      "El papel sale arrugado o torcido",
+      "Sale un mono purpura diciendo negandote acceso"
+    ],
+    "Calidad de Impresión (PQ)": [
+      "La página impresa presenta rayas horizontales o verticales",
+      "Aparecen manchas de tinta o tóner distribuidas en la hoja",
+      "Los colores son incorrectos (ej. un tono verde sale azul)",
+      "La página sale completamente cubierta de un color sólido (ej. fondo rosa o negro)",
+      "El texto aparece borroso o duplicado",
+      "La página sale en blanco (aunque el archivo se envió correctamente)"
+    ],
+    "Fallas Críticas/Electrónicas": [
+      "Todas las luces indicadoras parpadean de forma secuencial o intermitente",
+      "La impresora no enciende o se apaga inmediatamente después de encenderla",
+      "Mensaje de error genérico en la pantalla (ej. 'Error de sistema 49' o 'Contacte a servicio técnico')",
+      "La impresora no detecta la puerta o la tapa cerrada"
+    ]
+  },
+  "reglas": [
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Impresora marcada como 'Offline' en la computadora",
+      "hipotesis": "Spooler_de_impresion_bloqueado_o_proceso_caido",
+      "premisas": [
+        {
+          "clave": "spooler_activo"
+        },
+        {
+          "clave": "otros_trabajos_en_cola"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "otros_trabajos_en_cola",
+          "texto": "¿Al revisar la cola de impresión, ves trabajos que están atascados o congelados, y NO es que la cola esté simplemente vacía?"
+        },
+        {
+          "clave": "spooler_activo",
+          "texto": "¿Has intentado reiniciar el servicio 'Spooler de impresión' o reiniciar el equipo?"
+        }
+      ],
+      "acciones": [
+        "Reiniciar PC y la impresora (ciclo de energía).",
+        "Indicar cómo reiniciar el servicio 'Spooler de impresión' o reiniciar el equipo.",
+        "Eliminar trabajos bloqueados en la cola y reintentar."
+      ],
+      "recomendada_para_usuario": "Abrir cola de impresión y eliminar trabajos bloqueados; reiniciar equipos."
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Impresora marcada como 'Offline' en la computadora",
+      "hipotesis": "Conexion_fisica_desconectada_o_cable_suelto",
+      "premisas": [
+        {
+          "clave": "cable_conectado_firme"
+        },
+        {
+          "clave": "conexion_wifi_estable"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "cable_conectado_firme",
+          "texto": "¿El cable USB/Ethernet está conectado firmemente en ambos extremos (PC/Router/Impresora)?"
+        },
+        {
+          "clave": "conexion_wifi_estable",
+          "texto": "Si usas Wi-Fi, ¿la impresora muestra conexión a la red (LED o menú red)?"
+        }
+      ],
+      "acciones": [
+        "Reconectar cables en ambos extremos y comprobar luces de red.",
+        "Verificar que la impresora y el equipo estén en la misma red Wi-Fi."
+      ],
+      "recomendada_para_usuario": "Comprobar cables y estado de la red Wi-Fi."
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "La impresora es invisible en la red o no aparece como opción de impresión",
+      "hipotesis": "Impresora_no_conectada_a_la_misma_red_o_driver_no_instalado",
+      "premisas": [
+        {
+          "clave": "misma_red"
+        },
+        {
+          "clave": "driver_instalado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "misma_red",
+          "texto": "¿El equipo y la impresora están en la misma red Wi-Fi o la impresora está conectada al mismo router?"
+        },
+        {
+          "clave": "driver_instalado",
+          "texto": "¿El driver/paquete de impresora está instalado en el equipo?"
+        }
+      ],
+      "acciones": [
+        "Instalar o reinstalar el driver de la impresora.",
+        "Verificar ajustes de red y dirección IP en la impresora."
+      ],
+      "recomendada_para_usuario": "Reinstalar controlador y comprobar red."
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Retraso notable en el inicio de la impresión o después de enviar el trabajo",
+      "hipotesis": "Trabajo_en_preprocesamiento_o_conexion_lenta",
+      "premisas": [
+        {
+          "clave": "archivo_grande"
+        },
+        {
+          "clave": "varios_usuarios_imprimiendo"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "archivo_grande",
+          "texto": "¿El archivo a imprimir es muy grande (PDF con muchas imágenes) o es de alta resolución?"
+        },
+        {
+          "clave": "varios_usuarios_imprimiendo",
+          "texto": "¿Hay varias personas imprimiendo en la misma impresora/red ahora?"
+        }
+      ],
+      "acciones": [
+        "Imprimir una página de prueba o reducir la resolución del archivo.",
+        "Reiniciar la impresora para liberar memoria y reintentar."
+      ],
+      "recomendada_para_usuario": "Probar imprimir una página sencilla para aislar si es tamaño/cola."
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "El archivo de impresión no se imprime (permanece en la cola de impresión)",
+      "hipotesis": "Trabajo_bloqueado_en_spooler_o_error_de_driver",
+      "premisas": [
+        {
+          "clave": "cancelar_trabajo_intentado"
+        },
+        {
+          "clave": "reinstalar_driver_intentado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "cancelar_trabajo_intentado",
+          "texto": "¿Intentaste cancelar el trabajo en la cola o reiniciar el servicio de impresión?"
+        },
+        {
+          "clave": "reinstalar_driver_intentado",
+          "texto": "¿El mismo archivo imprime correctamente desde otra PC?"
+        }
+      ],
+      "acciones": [
+        "Eliminar trabajos atascados, reiniciar spooler y reenviar el trabajo.",
+        "Si imprime desde otra PC, reinstalar driver en la PC con problema."
+      ],
+      "recomendada_para_usuario": "Eliminar trabajos bloqueados y reiniciar antes de acciones avanzadas."
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Aparece un mensaje de 'Error de comunicación' en PC o impresora",
+      "hipotesis": "Interferencia_firewall_o_cable_defectuoso_o_conflicto_IP",
+      "premisas": [
+        {
+          "clave": "antivirus_firewall_reciente"
+        },
+        {
+          "clave": "direccion_ip_conflicto"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "antivirus_firewall_reciente",
+          "texto": "¿Se instaló recientemente un antivirus o cambió el firewall?"
+        },
+        {
+          "clave": "direccion_ip_conflicto",
+          "texto": "¿La impresora muestra una IP en su menú y coincide con la PC?"
+        }
+      ],
+      "acciones": [
+        "Probar temporalmente desactivar firewall/antivirus (solo para test).",
+        "Renovar IP o conectar por cable para descartar conflicto."
+      ],
+      "recomendada_para_usuario": "Probar conexión directa por cable o revisar configuración de red."
+    },
+    {
+      "dominio": "Suministros",
+      "sintoma_observable": "Mensaje 'Nivel de tinta o tóner bajo' o 'Cartucho vacío'",
+      "hipotesis": "Nivel_consumible_bajo_o_cartucho_vacio",
+      "premisas": [
+        {
+          "clave": "nivel_reportado_bajo"
+        },
+        {
+          "clave": "cartucho_reciente_instalado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "nivel_reportado_bajo",
+          "texto": "¿El panel de la impresora o el software indica nivel bajo o vacío?"
+        },
+        {
+          "clave": "cartucho_reciente_instalado",
+          "texto": "¿Acabas de instalar este cartucho?"
+        }
+      ],
+      "acciones": [
+        "Reemplazar cartucho por uno nuevo o usar modo reserva si existe.",
+        "Si cartucho nuevo da error, extraer y reinstalar; limpiar contactos."
+      ],
+      "recomendada_para_usuario": "Tener cartucho de repuesto y reemplazar si es necesario."
+    },
+    {
+      "dominio": "Suministros",
+      "sintoma_observable": "La impresora muestra una luz de tinta/tóner roja o naranja parpadeante",
+      "hipotesis": "Cartucho_no_instalado_correctamente_o_cartucho_no_reconocido",
+      "premisas": [
+        {
+          "clave": "cartucho_ajustado"
+        },
+        {
+          "clave": "cartucho_compatible"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "cartucho_ajustado",
+          "texto": "¿Has retirado y vuelto a insertar el cartucho recientemente?"
+        },
+        {
+          "clave": "cartucho_compatible",
+          "texto": "¿El cartucho que estás usando es original de la marca de la impresora, y NO uno compatible o reacondicionado?"
+        }
+      ],
+      "acciones": [
+        "Reinstalar cartucho y limpiar contactos eléctricos con cuidado.",
+        "Probar con cartucho original si el compatible no es reconocido."
+      ],
+      "recomendada_para_usuario": "Reinstalar cartucho y probar con otro si es posible."
+    },
+    {
+      "dominio": "Suministros",
+      "sintoma_observable": "Mensaje 'Cartucho no reconocido'",
+      "hipotesis": "Chip_o_contacto_sucio_o_cartucho_incompatible",
+      "premisas": [
+        {
+          "clave": "limpieza_contactos_intentada"
+        },
+        {
+          "clave": "cartucho_incompatible"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "limpieza_contactos_intentada",
+          "texto": "¿Has limpiado los contactos eléctricos del cartucho y alojamiento?"
+        },
+        {
+          "clave": "cartucho_incompatible",
+          "texto": "¿El cartucho es exactamente del mismo modelo que el anterior?"
+        }
+      ],
+      "acciones": [
+        "Limpiar contactos y reinstalar el cartucho; probar otro cartucho si es posible.",
+        "Contactar al proveedor si cartucho nuevo no es reconocido."
+      ],
+      "recomendada_para_usuario": "Limpiar contactos con paño sin pelusa e intentar reinstalar."
+    },
+    {
+      "dominio": "Suministros",
+      "sintoma_observable": "Mensaje 'Servicio Requerido' o 'Almohadilla de tinta al final de su vida útil'",
+      "hipotesis": "Contador_almohadilla_de_tinta_excedido",
+      "premisas": [
+        {
+          "clave": "mensaje_almohadilla"
+        },
+        {
+          "clave": "reinicio_contador_intentado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "mensaje_almohadilla",
+          "texto": "¿El mensaje menciona 'almohadilla' o 'fin de vida de almohadilla'?"
+        },
+        {
+          "clave": "reinicio_contador_intentado",
+          "texto": "¿Has intentado usar algún software de reseteo del contador por tu cuenta?"
+        }
+      ],
+      "acciones": [
+        "Contactar servicio técnico autorizado para resetear contador si corresponde.",
+        "No intentar procedimientos no documentados si está en garantía."
+      ],
+      "recomendada_para_usuario": "Contactar soporte autorizado si la impresora está en garantía."
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "Papel atascado visible en la bandeja de salida o en el recorrido",
+      "hipotesis": "Atasco_papel_por_obstruccion_fisica_o_guia_mal_ajustada",
+      "premisas": [
+        {
+          "clave": "papel_mojado_o_arrugado"
+        },
+        {
+          "clave": "guia_papel_ajustada"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "papel_mojado_o_arrugado",
+          "texto": "¿El papel está arrugado, húmedo o hay restos atascados visibles?"
+        },
+        {
+          "clave": "guia_papel_ajustada",
+          "texto": "¿Las guías del papel en la bandeja están ajustadas correctamente al tamaño del papel?"
+        }
+      ],
+      "acciones": [
+        "Apagar la impresora y retirar cuidadosamente el papel atascado según manual.",
+        "Alinear guías de papel y no sobrecargar la bandeja."
+      ],
+      "recomendada_para_usuario": "Retirar papel con cuidado; evitar tirar bruscamente."
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "La impresora hace ruido (chasquidos o rechinidos) y no recoge el papel",
+      "hipotesis": "Obstruccion_o_rodillo_deslizante",
+      "premisas": [
+        {
+          "clave": "ruido_al_intentar_coger_papel"
+        },
+        {
+          "clave": "papel_en_bandeja"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "ruido_al_intentar_coger_papel",
+          "texto": "¿La impresora hace un ruido de 'clic' o de rodillo girando, pero falla al tomar la hoja?"
+        },
+        {
+          "clave": "papel_en_bandeja",
+          "texto": "¿Has verificado que hay papel en la bandeja y que está bien colocado?"
+        }
+      ],
+      "acciones": [
+        "Comprobar y retirar objetos (clips, etiquetas) en la bandeja; reintentar con una hoja.",
+        "Si persiste, revisar limpieza de rodillos o contactar servicio."
+      ],
+      "recomendada_para_usuario": "Retirar obstrucciones visibles y probar con una sola hoja."
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "El papel sale arrugado o torcido",
+      "hipotesis": "Guia_papel_desajustada_o_pila_mala",
+      "premisas": [
+        {
+          "clave": "guia_desajustada"
+        },
+        {
+          "clave": "papel_no_alineado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "papel_no_alineado",
+          "texto": "¿El papel estaba bien alineado en la bandeja antes de imprimir?"
+        },
+        {
+          "clave": "guia_desajustada",
+          "texto": "¿Has comprobado que las guías de la bandeja de papel están firmemente ajustadas contra los bordes del papel?"
+        }
+      ],
+      "acciones": [
+        "Alinear la pila de papel y ajustar guías; probar con otra pila de papel.",
+        "Ajustar tipo de papel en driver si se usa papel grueso."
+      ],
+      "recomendada_para_usuario": "No sobrecargar la bandeja y alinear las guías."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "La página impresa presenta rayas horizontales o verticales",
+      "hipotesis": "Cabezal_obstruido_o_toner_aglomerado_o_alineacion",
+      "premisas": [
+        {
+          "clave": "limpieza_cabezal_ejecutada"
+        },
+        {
+          "clave": "alineacion_intentada"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "limpieza_cabezal_ejecutada",
+          "texto": "¿Has ejecutado el ciclo de 'Limpieza de cabezales' desde el software de la impresora más de una vez?"
+        },
+        {
+          "clave": "alineacion_intentada",
+          "texto": "¿Has intentado ejecutar la 'Alineación de cabezales' o 'Alineación de cartuchos'?"
+        }
+      ],
+      "acciones": [
+        "Ejecutar limpieza de cabezal y alineación desde utilidades; imprimir página de prueba.",
+        "Si persiste, reemplazar cartucho o revisar tambor si es láser."
+      ],
+      "recomendada_para_usuario": "Ejecutar rutinas de mantenimiento desde software/panel."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "Aparecen manchas de tinta o tóner distribuidas en la hoja",
+      "hipotesis": "Toner_suelto_o_derrame_o_guia_sucia",
+      "premisas": [
+        {
+          "clave": "manchas_recurrentes"
+        },
+        {
+          "clave": "inspeccion_tambor_realizada"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "manchas_recurrentes",
+          "texto": "¿Las manchas aparecen siempre exactamente en la misma zona de la hoja (como un patrón repetitivo), y NO en lugares aleatorios?"
+        },
+        {
+          "clave": "inspeccion_tambor_realizada",
+          "texto": "¿Has inspeccionado visualmente el tambor o el interior en busca de tóner o tinta derramada?"
+        }
+      ],
+      "acciones": [
+        "Limpiar interior según manual; revisar cartucho/toner por derrames.",
+        "Si hay derrame, limpiar y ejecutar página de limpieza."
+      ],
+      "recomendada_para_usuario": "No tocar tambor a la luz; seguir instrucciones del fabricante."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "Los colores son incorrectos (ej. un tono verde sale azul)",
+      "hipotesis": "Cartuchos_intercambiados_o_perfil_color_incorrecto_o_baja_tinta",
+      "premisas": [
+        {
+          "clave": "cartuchos_correctos_en_posicion"
+        },
+        {
+          "clave": "perfil_color_software"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "cartuchos_correctos_en_posicion",
+          "texto": "¿Has cambiado cartuchos recientemente o se usó un cartucho de otro color por error?"
+        },
+        {
+          "clave": "perfil_color_software",
+          "texto": "¿Estás imprimiendo desde un programa de diseño o edición fotográfica (como Photoshop, Illustrator, etc.), y NO desde un visor simple de PDF, Word o el navegador?"
+        }
+      ],
+      "acciones": [
+        "Verificar cartuchos en sus ranuras; imprimir diagnóstico de colores.",
+        "Si es software, probar imprimir desde otra aplicación."
+      ],
+      "recomendada_para_usuario": "Hacer prueba de colores desde panel o software."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "La página sale completamente cubierta de un color sólido (ej. fondo rosa o negro)",
+      "hipotesis": "Error_en_formateador_o_procesamiento_de_imagen",
+      "premisas": [
+        {
+          "clave": "reinicio_realizado"
+        },
+        {
+          "clave": "ocurre_en_varios_documentos"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "reinicio_realizado",
+          "texto": "¿Intentaste apagar y encender la impresora (ciclo de energía)?"
+        },
+        {
+          "clave": "ocurre_en_varios_documentos",
+          "texto": "¿Esto sucede con cualquier documento que intentas imprimir (incluso una página de prueba), o solo con uno específico?"
+        }
+      ],
+      "acciones": [
+        "Reiniciar la impresora y probar con página de prueba simple.",
+        "Si persiste en todos los trabajos, contactar servicio técnico."
+      ],
+      "recomendada_para_usuario": "Probar con documento sencillo (p. ej. Notepad) y reiniciar la impresora."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "El texto aparece borroso o duplicado",
+      "hipotesis": "Ajuste_de_calidad_o_modo_de_papel_equivocado_o_problema_de_fusion",
+      "premisas": [
+        {
+          "clave": "tipo_papel_correcto_en_driver"
+        },
+        {
+          "clave": "duplicado_repetitivo"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "tipo_papel_correcto_en_driver",
+          "texto": "¿Has seleccionado el tipo de papel correcto en las propiedades de impresión?"
+        },
+        {
+          "clave": "duplicado_repetitivo",
+          "texto": "¿El texto aparece duplicado o con una 'sombra' (como si estuviera impreso dos veces ligeramente movido), y NO es que esté simplemente borroso pero sin duplicarse?"
+        }
+      ],
+      "acciones": [
+        "Ajustar tipo y calidad de papel en el driver; imprimir en alta calidad para prueba.",
+        "Si hay duplicado mecánico, sugerir revisión por técnico del fuser/rodillo."
+      ],
+      "recomendada_para_usuario": "Probar con otro tipo de papel y revisar ajustes de impresión."
+    },
+    {
+      "dominio": "Calidad de Impresión (PQ)",
+      "sintoma_observable": "La página sale en blanco (aunque el archivo se envió correctamente)",
+      "hipotesis": "Cartucho_vacio_o_cabezal_obstruido_o_seleccion_de_impresora_erronea",
+      "premisas": [
+        {
+          "clave": "otros_usuarios_imprimen_correctamente"
+        },
+        {
+          "clave": "nivel_reportado_bajo"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "nivel_reportado_bajo",
+          "texto": "¿El panel indica nivel de tinta o tóner bajo o vacío?"
+        },
+        {
+          "clave": "otros_usuarios_imprimen_correctamente",
+          "texto": "¿Otro documento o página de prueba también sale en blanco?"
+        }
+      ],
+      "acciones": [
+        "Comprobar niveles de consumibles; imprimir página de diagnóstico desde panel.",
+        "Si consumibles OK, ejecutar limpieza de cabezales o reinstalar driver; si persiste, servicio técnico."
+      ],
+      "recomendada_para_usuario": "Imprimir página de prueba desde la impresora para aislar el problema."
+    },
+    {
+      "dominio": "Fallas Críticas/Electrónicas",
+      "sintoma_observable": "Todas las luces indicadoras parpadean de forma secuencial o intermitente",
+      "hipotesis": "Fallo_interno_electronico_o_modo_error_general",
+      "premisas": [
+        {
+          "clave": "se_realizo_ciclo_energia"
+        },
+        {
+          "clave": "patron_parpadeo_constante"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "se_realizo_ciclo_energia",
+          "texto": "¿Has apagado y vuelto a encender la impresora (desconectar de la corriente un minuto)?"
+        },
+        {
+          "clave": "patron_parpadeo_constante",
+          "texto": "¿Las luces parpadean en un patrón específico y repetitivo, o es solo un parpadeo caótico?"
+        }
+      ],
+      "acciones": [
+        "Realizar ciclo de energía; si persiste, contactar servicio técnico.",
+        "Registrar patrón de parpadeo para facilitar diagnóstico."
+      ],
+      "recomendada_para_usuario": "No realizar manipulaciones internas; contactar soporte si el reinicio no resuelve."
+    },
+    {
+      "dominio": "Fallas Críticas/Electrónicas",
+      "sintoma_observable": "La impresora no enciende o se apaga inmediatamente después de encenderla",
+      "hipotesis": "Fallo_suministro_electrico_o_proteccion_interna",
+      "premisas": [
+        {
+          "clave": "cable_energia_conectado"
+        },
+        {
+          "clave": "toma_de_corriente_funciona"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "toma_de_corriente_funciona",
+          "texto": "¿Has comprobado la toma de corriente con otro dispositivo?"
+        },
+        {
+          "clave": "cable_energia_conectado",
+          "texto": "¿El cable de alimentación está bien conectado y sin daños visibles?"
+        }
+      ],
+      "acciones": [
+        "Comprobar cable y probar en otra toma; desconectar y reconectar cables.",
+        "Si no enciende, contactar servicio técnico autorizado."
+      ],
+      "recomendada_para_usuario": "Verificar alimentación y evitar abrir la carcasa si está en garantía."
+    },
+    {
+      "dominio": "Fallas Críticas/Electrónicas",
+      "sintoma_observable": "Mensaje de error genérico en la pantalla (ej. 'Error de sistema 49' o 'Contacte a servicio técnico')",
+      "hipotesis": "Error_de_firmware_o_trabajo_corrupto_que_causa_bloqueo",
+      "premisas": [
+        {
+          "clave": "ocurre_con_varios_documentos"
+        },
+        {
+          "clave": "mensaje_especifico"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "mensaje_especifico",
+          "texto": "¿El error que ves en la pantalla es un código (por ejemplo, 'Error 49.2F') y NO un mensaje general como 'Contacte a servicio técnico'?"
+        },
+        {
+          "clave": "ocurre_con_varios_documentos",
+          "texto": "¿Este error ocurre solamente cuando intentas imprimir un tipo de archivo específico (como un PDF o una foto), y NO con cualquier documento que intentes imprimir?"
+        }
+      ],
+      "acciones": [
+        "Reiniciar impresora y probar imprimir página desde panel; anotar código si aparece.",
+        "Contactar servicio técnico con el código y detalles si el error persiste."
+      ],
+      "recomendada_para_usuario": "Anotar texto/código del error para facilitar soporte."
+    },
+    {
+      "dominio": "Fallas Críticas/Electrónicas",
+      "sintoma_observable": "La impresora no detecta la puerta o la tapa cerrada",
+      "hipotesis": "Sensor_de_tapa_no_detecta_cierre_o_tapa_no_acoplada",
+      "premisas": [
+        {
+          "clave": "tapa_completamente_cerrada"
+        },
+        {
+          "clave": "mensaje_tapa_abierta"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "mensaje_tapa_abierta",
+          "texto": "¿La impresora indica 'puerta abierta' aunque la tapa parezca cerrada?"
+        },
+        {
+          "clave": "tapa_completamente_cerrada",
+          "texto": "¿Has abierto y cerrado firmemente todas las tapas, asegurándote de que hagan 'clic'?"
+        }
+      ],
+      "acciones": [
+        "Comprobar que no haya objetos impidiendo el cierre; asegurar que la tapa esté bien encajada.",
+        "Si sigue detectando abierta, contactar servicio técnico."
+      ],
+      "recomendada_para_usuario": "Revisar cierres y bisagras; no forzar la tapa."
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "Papel atascado visible en la bandeja de salida o en el recorrido",
+      "hipotesis": "Tiene_su_equipo_infectado_con_el_malware_\"Bonzi_Buddy\"",
+      "premisas": [
+        {
+          "clave": "guia_desajustada"
+        },
+        {
+          "clave": "papel_mojado_o_arrugado"
+        },
+        {
+          "clave": "papel_en_bandeja"
+        },
+        {
+          "clave": "ruido_al_intentar_coger_papel"
+        },
+        {
+          "clave": "guia_papel_ajustada"
+        },
+        {
+          "clave": "papel_no_alineado"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "papel_mojado_o_arrugado",
+          "texto": "¿El papel está arrugado, húmedo o hay restos atascados visibles?"
+        },
+        {
+          "clave": "guia_papel_ajustada",
+          "texto": "¿Las guías del papel en la bandeja están ajustadas correctamente al tamaño del papel?"
+        },
+        {
+          "clave": "ruido_al_intentar_coger_papel",
+          "texto": "¿La impresora hace un ruido de 'clic' o de rodillo girando, pero falla al tomar la hoja?"
+        },
+        {
+          "clave": "papel_en_bandeja",
+          "texto": "¿Has verificado que hay papel en la bandeja y que está bien colocado?"
+        },
+        {
+          "clave": "papel_no_alineado",
+          "texto": "¿El papel estaba bien alineado en la bandeja antes de imprimir?"
+        },
+        {
+          "clave": "guia_desajustada",
+          "texto": "¿Has comprobado que las guías de la bandeja de papel están firmemente ajustadas contra los bordes del papel?"
+        }
+      ],
+      "acciones": [
+        "Revisar la sugerencia proporcionada.",
+        "Si el problema persiste, contactar a soporte técnico."
+      ],
+      "recomendada_para_usuario": "sdc"
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Sale un mono purpura diciendo negandote acceso",
+      "hipotesis": "Tiene_su_equipo_infectado_con_el_malware_\"Bonzi_Buddy\"",
+      "premisas": [
+        {
+          "clave": "otros_trabajos_en_cola"
+        },
+        {
+          "clave": "archivo_grande"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "otros_trabajos_en_cola",
+          "texto": "¿Al revisar la cola de impresión, ves trabajos que están atascados o congelados, y NO es que la cola esté simplemente vacía?"
+        },
+        {
+          "clave": "archivo_grande",
+          "texto": "¿El archivo a imprimir es muy grande (PDF con muchas imágenes) o es de alta resolución?"
+        }
+      ],
+      "acciones": [
+        "Revisar la sugerencia proporcionada.",
+        "Si el problema persiste, contactar a soporte técnico."
+      ],
+      "recomendada_para_usuario": "Instale un antivirus"
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "Sale un mono purpura diciendo negandote acceso",
+      "hipotesis": "Tiene_su_equipo_infectado_con_el_malware_\"Bonzi_Buddy\"",
+      "premisas": [
+        {
+          "clave": "guia_desajustada"
+        },
+        {
+          "clave": "sexysoltera"
+        },
+        {
+          "clave": "papel_en_bandeja"
+        },
+        {
+          "clave": "papel_no_alineado"
+        },
+        {
+          "clave": "guia_papel_ajustada"
+        },
+        {
+          "clave": "papel_mojado_o_arrugado"
+        },
+        {
+          "clave": "ruido_al_intentar_coger_papel"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "sexysoltera",
+          "texto": ""
+        },
+        {
+          "clave": "papel_mojado_o_arrugado",
+          "texto": "¿El papel está arrugado, húmedo o hay restos atascados visibles?"
+        },
+        {
+          "clave": "guia_papel_ajustada",
+          "texto": "¿Las guías del papel en la bandeja están ajustadas correctamente al tamaño del papel?"
+        },
+        {
+          "clave": "ruido_al_intentar_coger_papel",
+          "texto": "¿La impresora hace un ruido de 'clic' o de rodillo girando, pero falla al tomar la hoja?"
+        },
+        {
+          "clave": "papel_en_bandeja",
+          "texto": "¿Has verificado que hay papel en la bandeja y que está bien colocado?"
+        },
+        {
+          "clave": "papel_no_alineado",
+          "texto": "¿El papel estaba bien alineado en la bandeja antes de imprimir?"
+        },
+        {
+          "clave": "guia_desajustada",
+          "texto": "¿Has comprobado que las guías de la bandeja de papel están firmemente ajustadas contra los bordes del papel?"
+        }
+      ],
+      "acciones": [
+        "Revisar la sugerencia proporcionada.",
+        "Si el problema persiste, contactar a soporte técnico."
+      ],
+      "recomendada_para_usuario": "Descarga antivirus y reinicie"
+    },
+    {
+      "dominio": "Mecánica/Atascos",
+      "sintoma_observable": "La impresora hace ruido (chasquidos o rechinidos) y no recoge el papel",
+      "hipotesis": "Tiene_su_equipo_infectado_con_el_malware_\"Bonzi_Buddy\"",
+      "premisas": [
+        {
+          "clave": "papel_mojado_o_arrugado"
+        },
+        {
+          "clave": "guia_papel_ajustada"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "papel_mojado_o_arrugado",
+          "texto": "¿El papel está arrugado, húmedo o hay restos atascados visibles?"
+        },
+        {
+          "clave": "guia_papel_ajustada",
+          "texto": "¿Las guías del papel en la bandeja están ajustadas correctamente al tamaño del papel?"
+        }
+      ],
+      "acciones": [
+        "Revisar la sugerencia proporcionada por el usuario.",
+        "Si el problema persiste, contactar a soporte técnico."
+      ],
+      "recomendada_para_usuario": "Hksbfjk"
+    },
+    {
+      "dominio": "Conectividad/Software",
+      "sintoma_observable": "Sale un mono purpura diciendovsvd",
+      "hipotesis": "Tiene_su_equipo_infectado_con_el_malware_\"Bonzi_Buddy\"",
+      "premisas": [
+        {
+          "clave": "archivo_grande"
+        },
+        {
+          "clave": "spooler_activo"
+        }
+      ],
+      "preguntas": [
+        {
+          "clave": "spooler_activo",
+          "texto": "¿Has intentado reiniciar el servicio 'Spooler de impresión' o reiniciar el equipo?"
+        },
+        {
+          "clave": "archivo_grande",
+          "texto": "¿El archivo a imprimir es muy grande (PDF con muchas imágenes) o es de alta resolución?"
+        }
+      ],
+      "acciones": [
+        "Revisar la sugerencia proporcionada por el usuario.",
+        "Si el problema persiste, contactar a soporte técnico."
+      ],
+      "recomendada_para_usuario": "bf"
+    }
+  ]
+}
