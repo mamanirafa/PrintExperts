@@ -260,24 +260,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="probable_cause">Causa probable *</label>
-                        <input type="text" name="probable_cause" id="probable_cause" placeholder="Ingrese la causa probable del problema..." required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="new_actions">Acciones sugeridas (Opcional)</label>
+                        <label for="new_actions">Acciones y Sugerencias *</label>
                         <div id="new_actions_container">
-                            </div>
+                            <div class="action-item" style="display: flex; margin-bottom: 10px;">
+                                <input type="text" name="new_actions[]" placeholder="Descripción de la acción/sugerencia 1" style="flex-grow: 1; margin-right: 10px;">
+                                </div>
+                        </div>
                         <button type="button" onclick="addNewAction()" style="background: #0c9aaf; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
-                            + Agregar acción
+                            + Agregar otra acción
                         </button>
                         <small style="color: #828181; font-size: 14px; display: block; margin-top: 5px;">
-                            (Pasos técnicos. Si se deja vacío, se usará un mensaje por defecto).
+                            (Agregue al menos una acción o sugerencia para el usuario).
                         </small>
-                    </div>
-                    <div class="form-group">
-                        <label for="user_suggestion">Sugerencia para el usuario *</label>
-                        <textarea name="user_suggestion" id="user_suggestion" placeholder="Ingrese una sugerencia para el usuario..." required></textarea>
                     </div>
 
                     <button type="submit" class="add-knowledge-btn-main" id="submitBtn">
@@ -551,8 +545,7 @@
             input.dataset.key = technicalKey;
         }
 
-        function validateForm() {
-            const form = document.getElementById('knowledgeForm');
+            function validateForm() {
             const validationMessage = document.getElementById('validation-message');
             const errors = [];
 
@@ -560,20 +553,24 @@
             const symptomType = document.getElementById('symptom_type').value;
             const premiseType = document.getElementById('premise_type').value;
             const probableCause = document.getElementById('probable_cause').value;
-            const userSuggestion = document.getElementById('user_suggestion').value;
-
+            
+            // (NUEVO) 'userSuggestion' se elimina de la validación
+            
             if (!category) errors.push('Debe seleccionar una categoría');
             if (!symptomType) errors.push('Debe seleccionar un tipo de síntoma');
             if (!premiseType) errors.push('Debe seleccionar un tipo de premisas');
             if (!probableCause.trim()) errors.push('Debe ingresar la causa probable');
-            if (!userSuggestion.trim()) errors.push('Debe ingresar la sugerencia para el usuario');
+            
+            // (NUEVO) Validar que al menos la primera acción esté completa
+            const firstAction = document.querySelector('input[name="new_actions[]"]');
+            if (!firstAction || !firstAction.value.trim()) {
+                errors.push('Debe agregar al menos una acción o sugerencia');
+            }
 
             if (symptomType === 'new') {
-                const newSymptom = document.getElementById('new_symptom').value;
-                if (!newSymptom.trim()) errors.push('Debe ingresar el nuevo síntoma');
+                if (!document.getElementById('new_symptom').value.trim()) errors.push('Debe ingresar el nuevo síntoma');
             } else if (symptomType === 'existing') {
-                const existingSymptom = document.getElementById('existing_symptom').value;
-                if (!existingSymptom) errors.push('Debe seleccionar un síntoma existente');
+                if (!document.getElementById('existing_symptom').value) errors.push('Debe seleccionar un síntoma existente');
             }
 
             if (premiseType === 'new') {
@@ -582,16 +579,13 @@
                     errors.push('Debe agregar al menos una premisa nueva');
                 }
             } else if (premiseType === 'existing') {
-                const existingPremises = document.querySelectorAll('input[name^="existing_premises"]:checked');
-                if (existingPremises.length === 0) {
+                if (document.querySelectorAll('input[name^="existing_premises"]:checked').length === 0) {
                     errors.push('Debe seleccionar al menos una premisa existente');
                 }
             } else if (premiseType === 'mixed') {
                 const mixedExisting = document.querySelectorAll('input[name^="mixed_existing_premises"]:checked');
                 const mixedNewTexts = document.querySelectorAll('input[name="mixed_new_premise_text[]"]');
-                // Corrección en la lógica de validación de 'mixed'
                 let newTextFound = Array.from(mixedNewTexts).some(input => input.value.trim() !== "");
-                
                 if (mixedExisting.length === 0 && !newTextFound) {
                     errors.push('Debe seleccionar premisas existentes o agregar nuevas premisas');
                 }
@@ -613,9 +607,7 @@
         async function handleSubmit(event) {
             event.preventDefault();
             
-            if (!validateForm()) {
-                return;
-            }
+            if (!validateForm()) return;
             
             const validationMessage = document.getElementById('validation-message');
             const submitBtn = document.getElementById('submitBtn');
@@ -637,7 +629,7 @@
                 premise_type: formData.get('premise_type'),
                 probable_cause: formData.get('probable_cause'),
                 new_actions: formData.getAll('new_actions[]'),
-                user_suggestion: formData.get('user_suggestion'),
+                // 'user_suggestion' se elimina
                 
                 existing_premises: formData.getAll('existing_premises[]').concat(formData.getAll('mixed_existing_premises[]')),
                 
@@ -659,9 +651,7 @@
             try {
                 const response = await fetch("{{ url_for('add_knowledge') }}", {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
 
@@ -675,8 +665,12 @@
                     
                     form.reset(); 
                     
-                    // Esta línea ahora funcionará porque el HTML existe
-                    document.getElementById('new_actions_container').innerHTML = '';
+                    // (NUEVO) Restablecer el contenedor de acciones al estado inicial (con un campo)
+                    document.getElementById('new_actions_container').innerHTML = `
+                        <div class="action-item" style="display: flex; margin-bottom: 10px;">
+                            <input type="text" name="new_actions[]" placeholder="Descripción de la acción/sugerencia 1" style="flex-grow: 1; margin-right: 10px;">
+                        </div>`;
+                    actionCounter = 1; // Reiniciar contador
 
                     setTimeout(() => {
                         if (result.redirect) {
@@ -705,37 +699,40 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('knowledgeForm');
-            if (form) { 
-                form.addEventListener('input', validateForm);
-                form.addEventListener('change', validateForm);
-                
-                document.getElementById('category').addEventListener('change', function() {
-                    if (document.getElementById('symptom_type').value === 'existing') {
-                        loadExistingSymptoms();
-                    }
-                    if (document.getElementById('premise_type').value === 'existing' || 
-                        document.getElementById('premise_type').value === 'mixed') {
-                        loadExistingPremises();
-                    }
-                    validateForm();
-                });
-                
-                document.getElementById('symptom_type').addEventListener('change', function() {
-                    if (this.value === 'existing') {
-                        loadExistingSymptoms();
-                    }
-                });
+                const form = document.getElementById('knowledgeForm');
+                if (form) { 
+                    form.addEventListener('input', validateForm);
+                    form.addEventListener('change', validateForm);
+                    
+                    document.getElementById('category').addEventListener('change', function() {
+                        if (document.getElementById('symptom_type').value === 'existing') {
+                            loadExistingSymptoms();
+                        }
+                        if (document.getElementById('premise_type').value === 'existing' || 
+                            document.getElementById('premise_type').value === 'mixed') {
+                            loadExistingPremises();
+                        }
+                        validateForm();
+                    });
+                    
+                    document.getElementById('symptom_type').addEventListener('change', function() {
+                        if (this.value === 'existing') {
+                            loadExistingSymptoms();
+                        }
+                    });
 
-                document.getElementById('premise_type').addEventListener('change', function() {
-                    if (this.value === 'existing' || this.value === 'mixed') {
-                        loadExistingPremises();
-                    }
-                });
-                
-                form.addEventListener('submit', handleSubmit);
-            }
-        });
+                    document.getElementById('premise_type').addEventListener('change', function() {
+                        if (this.value === 'existing' || this.value === 'mixed') {
+                            loadExistingPremises();
+                        }
+                    });
+                    
+                    form.addEventListener('submit', handleSubmit);
+
+                    // (NUEVO) Validar el formulario una vez al cargar la página
+                    validateForm(); 
+                }
+            });
     </script>
 </body>
 </html>

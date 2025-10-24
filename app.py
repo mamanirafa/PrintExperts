@@ -220,7 +220,6 @@ def show_diagnosis():
 def add_knowledge():
     """Página para agregar nuevo conocimiento a la base de datos."""
     
-    # ########## MODIFICACIÓN INICIO ##########
     if request.method == 'POST':
         try:
             data = request.json
@@ -229,9 +228,8 @@ def add_knowledge():
             categoria = data.get("category")
             sintoma_tipo = data.get("symptom_type")
             causa_probable = data.get("probable_cause")
-            sugerencia = data.get("user_suggestion")
-            # 1.1. (NUEVO) Recolectar acciones
-            acciones_nuevas = data.get("new_actions", [])
+            # (NUEVO) 'user_suggestion' se elimina, ahora todo está en 'new_actions'
+            acciones_nuevas = data.get("new_actions", []) 
 
             # 2. Determinar el síntoma
             sintoma_observable = ""
@@ -240,10 +238,13 @@ def add_knowledge():
             elif sintoma_tipo == 'existing':
                 sintoma_observable = data.get("existing_symptom")
 
-            if not all([categoria, sintoma_observable, causa_probable, sugerencia]):
-                 return jsonify({"success": False, "message": "Faltan datos clave (categoría, síntoma, causa o sugerencia)."}), 400
+            # 3. (NUEVO) Validar que los campos clave y al menos una acción existan
+            acciones_finales = [accion for accion in acciones_nuevas if accion.strip()]
+            
+            if not all([categoria, sintoma_observable, causa_probable]) or not acciones_finales:
+                 return jsonify({"success": False, "message": "Faltan datos clave (categoría, síntoma, causa o al menos una acción)."}), 400
 
-            # 3. Cargar la base de conocimiento de destino
+            # 4. Cargar la base de conocimiento de destino
             target_kb_file = UserKnowledgeBase
             BC_data = None
             if os.path.exists(target_kb_file):
@@ -254,39 +255,27 @@ def add_knowledge():
             if not BC_data:
                  return jsonify({"success": False, "message": "Error al cargar la base de conocimiento base."}), 500
 
-            # 4. Recolectar y unificar premisas (claves, textos, preguntas)
+            # 5. Recolectar y unificar premisas
             claves_existentes = data.get("existing_premises", [])
             claves_nuevas = data.get("new_premise_keys", [])
-            textos_nuevos = data.get("new_premise_texts", [])
             preguntas_nuevas = data.get("new_premise_questions", [])
 
             claves_premisas_finales = list(set(claves_existentes + claves_nuevas))
             
-            # 5. Ejecutar la validación lógica de duplicados
+            # 6. Ejecutar la validación lógica de duplicados
             es_duplicado, mensaje = check_logical_duplicate(BC_data, sintoma_observable, claves_premisas_finales)
             if es_duplicado:
-                return jsonify({"success": False, "message": mensaje}), 409 # 409 Conflict
+                return jsonify({"success": False, "message": mensaje}), 409
 
-            # 6. (NUEVO) Determinar la lista final de acciones
-            # Filtrar strings vacíos que puedan venir del formulario
-            acciones_finales = [accion for accion in acciones_nuevas if accion.strip()] 
-            
-            if not acciones_finales:
-                # Si el usuario no puso ninguna, usar una por defecto
-                acciones_finales = [
-                    "Revisar la sugerencia proporcionada por el usuario.",
-                    "Si el problema persiste, contactar a soporte técnico."
-                ]
-
-            # 7. Construir la nueva regla
+            # 7. Construir la nueva regla (sin 'recomendada_para_usuario')
             nueva_regla = {
                 "dominio": categoria,
                 "sintoma_observable": sintoma_observable,
-                "hipotesis": causa_probable.replace(" ", "_"), # Guardar con guiones bajos
+                "hipotesis": causa_probable.replace(" ", "_"),
                 "premisas": [{"clave": k} for k in claves_premisas_finales],
                 "preguntas": [],
-                "acciones": acciones_finales, # <-- (MODIFICADO) Usar la lista final
-                "recomendada_para_usuario": sugerencia
+                "acciones": acciones_finales 
+                # 'recomendada_para_usuario' se elimina
             }
             
             # 8. Añadir preguntas (nuevas y existentes)
@@ -308,13 +297,13 @@ def add_knowledge():
                 if sintoma_observable not in BC_data["categorias"][categoria]:
                     BC_data["categorias"][categoria].append(sintoma_observable)
             
-            # 10. Añadir la regla y guardar en el archivo de USUARIO
+            # 10. Añadir la regla y guardar
             BC_data["reglas"].append(nueva_regla)
             
             with open(UserKnowledgeBase, "w", encoding="utf-8") as f:
                 json.dump(BC_data, f, ensure_ascii=False, indent=2)
             
-            # 11. Enviar respuesta de éxito con redirección
+            # 11. Enviar respuesta de éxito
             return jsonify({
                 "success": True, 
                 "message": f"¡Conocimiento agregado exitosamente a '{UserKnowledgeBase}'!",
@@ -326,15 +315,12 @@ def add_knowledge():
             import traceback
             traceback.print_exc()
             return jsonify({"success": False, "message": f"Error interno del servidor: {e}"}), 500
-    # ########## MODIFICACIÓN FIN ##########
     
-    # GET: Mostrar la página
+    # GET: (No cambia)
     BC, kb_name = get_active_kb()
     user_kb_exists = os.path.exists(UserKnowledgeBase)
-    
     categorias = BC.get("categorias", {})
     cat_keys = list(categorias.keys())
-    
     return render_template('index.html', 
                             step=5, 
                             categories=cat_keys,

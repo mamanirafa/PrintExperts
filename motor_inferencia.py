@@ -82,7 +82,6 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
     """
     reglas = bc.get("reglas", [])
     
-    # 1. Obtener reglas candidatas
     reglas_candidatas = [r for r in reglas if r.get("sintoma_observable", "").lower() == selected_obs.lower()]
 
     trazas = []
@@ -94,16 +93,14 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
         premisas = regla.get("premisas", [])
         preguntas = regla.get("preguntas", [])
 
-        # Comprobar premisas
         premisas_result = {}
         all_premisas_satisfied = True
         
         for p in premisas:
             clave = p.get("clave")
-            val = answers.get(clave) # Buscamos por clave
+            val = answers.get(clave)
             
             if val is None:
-                # Fallback: buscar la pregunta asociada por texto normalizado
                 for q in preguntas:
                     if q.get("clave") == clave:
                         qtexto = q.get("texto", "")
@@ -111,24 +108,20 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
                         val = answers.get(keytxt)
                         break
             
-            # Normalizar valor de respuesta a booleano
-            p_res = None # Por defecto, no satisfecha
+            p_res = None
             if val is not None:
                 if isinstance(val, bool):
-                    p_res = val # El valor ya es booleano
+                    p_res = val
                 elif isinstance(val, str):
-                    # Manejar respuestas de string (ej. de un form web)
                     if is_yes(val):
                         p_res = True
                     elif is_no(val):
                         p_res = False
-                # Si val es un string no reconocido (ej. "quizás"), p_res queda en None
 
             premisas_result[clave] = p_res
-            if p_res is not True: # Si es False o None
+            if p_res is not True:
                 all_premisas_satisfied = False
 
-        # Comprobar confirmaciones por respuestas a preguntas de regla
         confirmaciones = []
         respuestas_regla = []
         any_confirmation = False
@@ -143,7 +136,6 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
             conf = False
             
             if used:
-                # Llamada simplificada (ya no necesita 'q')
                 conf = evaluar_respuesta_confirmatoria(resp)
                 confirmaciones.append(conf)
                 if conf:
@@ -151,7 +143,6 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
             
             respuestas_regla.append({"pregunta": qtexto, "respuesta": resp, "usada": used, "confirmada": conf})
 
-        # Lógica de aceptación
         acepta = False
         razon = "No hay confirmaciones suficientes."
         
@@ -162,7 +153,6 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
             acepta = True
             razon = "Alguna pregunta específica del observable confirmó la hipótesis (no hay premisas)."
         elif any_confirmation and not all_premisas_satisfied:
-            # Si hay alguna confirmación y no todas las premisas son True
             acepta = True
             razon = "Alguna pregunta específica del observable confirmó la hipótesis."
         
@@ -177,22 +167,29 @@ def ejecutar_diagnostico(bc: dict, selected_cat: str, selected_obs: str, answers
         })
 
         if acepta:
+            # (NUEVO) Combinar 'acciones' y 'recomendada_para_usuario'
+            # para dar compatibilidad hacia atrás con JSONs antiguos.
+            acciones_finales = regla.get("acciones", [])
+            recomendacion_antigua = regla.get("recomendada_para_usuario")
+            
+            if recomendacion_antigua and (recomendacion_antigua not in acciones_finales):
+                acciones_finales.append(recomendacion_antigua)
+
             diagnostico = {
                 "causa_probable": hipotesis,
-                "acciones": regla.get("acciones", []),
+                "acciones": acciones_finales, # <-- Lista combinada
                 "dominio": dominio,
-                "recomendada_para_usuario": regla.get("recomendada_para_usuario"),
-                "traza": trazas # Incluimos las trazas hasta este punto
+                # "recomendada_para_usuario" ya no se pasa
+                "traza": trazas
             }
             break
 
-    # Si ninguna regla fue aceptada
     if diagnostico is None:
         diagnostico = {
             "causa_probable": "No determinada",
             "acciones": ["Revisar otras hipótesis; compartir respuestas y trazabilidad con soporte técnico."],
             "dominio": selected_cat,
-            "traza": trazas # Incluimos todas las trazas de las reglas candidatas
+            "traza": trazas
         }
     
     return diagnostico
