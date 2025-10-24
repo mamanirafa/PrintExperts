@@ -60,9 +60,9 @@
       "acciones": [
         "Reiniciar PC y la impresora (ciclo de energía).",
         "Indicar cómo reiniciar el servicio 'Spooler de impresión' o reiniciar el equipo.",
-        "Eliminar trabajos bloqueados en la cola y reintentar."
-      ],
-      "recomendada_para_usuario": "Abrir cola de impresión y eliminar trabajos bloqueados; reiniciar equipos."
+        "Eliminar trabajos bloqueados en la cola y reintentar.",
+        "Abrir cola de impresión y eliminar trabajos bloqueados; reiniciar equipos."
+      ]
     },
     {
       "dominio": "Conectividad/Software",
@@ -88,9 +88,9 @@
       ],
       "acciones": [
         "Reconectar cables en ambos extremos y comprobar luces de red.",
-        "Verificar que la impresora y el equipo estén en la misma red Wi-Fi."
-      ],
-      "recomendada_para_usuario": "Comprobar cables y estado de la red Wi-Fi."
+        "Verificar que la impresora y el equipo estén en la misma red Wi-Fi.",
+        "Comprobar cables y estado de la red Wi-Fi."
+      ]
     },
     {
       "dominio": "Conectividad/Software",
@@ -116,9 +116,9 @@
       ],
       "acciones": [
         "Instalar o reinstalar el driver de la impresora.",
-        "Verificar ajustes de red y dirección IP en la impresora."
-      ],
-      "recomendada_para_usuario": "Reinstalar controlador y comprobar red."
+        "Verificar ajustes de red y dirección IP en la impresora.",
+        "Reinstalar controlador y comprobar red."
+      ]
     },
     {
       "dominio": "Conectividad/Software",
@@ -144,9 +144,9 @@
       ],
       "acciones": [
         "Imprimir una página de prueba o reducir la resolución del archivo.",
-        "Reiniciar la impresora para liberar memoria y reintentar."
-      ],
-      "recomendada_para_usuario": "Probar imprimir una página sencilla para aislar si es tamaño/cola."
+        "Reiniciar la impresora para liberar memoria y reintentar.",
+        "Probar imprimir una página sencilla para aislar si es tamaño/cola."
+      ]
     },
     {
       "dominio": "Conectividad/Software",
@@ -172,9 +172,9 @@
       ],
       "acciones": [
         "Eliminar trabajos atascados, reiniciar spooler y reenviar el trabajo.",
-        "Si imprime desde otra PC, reinstalar driver en la PC con problema."
-      ],
-      "recomendada_para_usuario": "Eliminar trabajos bloqueados y reiniciar antes de acciones avanzadas."
+        "Si imprime desde otra PC, reinstalar driver en la PC con problema.",
+        "Eliminar trabajos bloqueados y reiniciar antes de acciones avanzadas."
+      ]
     },
     {
       "dominio": "Conectividad/Software",
@@ -200,9 +200,9 @@
       ],
       "acciones": [
         "Probar temporalmente desactivar firewall/antivirus (solo para test).",
-        "Renovar IP o conectar por cable para descartar conflicto."
-      ],
-      "recomendada_para_usuario": "Probar conexión directa por cable o revisar configuración de red."
+        "Renovar IP o conectar por cable para descartar conflicto.",
+        "Probar conexión directa por cable o revisar configuración de red."
+      ]
     },
     {
       "dominio": "Suministros",
@@ -228,9 +228,9 @@
       ],
       "acciones": [
         "Reemplazar cartucho por uno nuevo o usar modo reserva si existe.",
-        "Si cartucho nuevo da error, extraer y reinstalar; limpiar contactos."
-      ],
-      "recomendada_para_usuario": "Tener cartucho de repuesto y reemplazar si es necesario."
+        "Si cartucho nuevo da error, extraer y reinstalar; limpiar contactos.",
+        "Tener cartucho de repuesto y reemplazar si es necesario."
+      ]
     },
     {
       "dominio": "Suministros",
@@ -256,9 +256,9 @@
       ],
       "acciones": [
         "Reinstalar cartucho y limpiar contactos eléctricos con cuidado.",
-        "Probar con cartucho original si el compatible no es reconocido."
-      ],
-      "recomendada_para_usuario": "Reinstalar cartucho y probar con otro si es posible."
+        "Probar con cartucho original si el compatible no es reconocido.",
+        "Reinstalar cartucho y probar con otro si es posible."
+      ]
     },
     {
       "dominio": "Suministros",
@@ -284,9 +284,9 @@
       ],
       "acciones": [
         "Limpiar contactos y reinstalar el cartucho; probar otro cartucho si es posible.",
-        "Contactar al proveedor si cartucho nuevo no es reconocido."
-      ],
-      "recomendada_para_usuario": "Limpiar contactos con paño sin pelusa e intentar reinstalar."
+        "Contactar al proveedor si cartucho nuevo no es reconocido.",
+        "Limpiar contactos con paño sin pelusa e intentar reinstalar."
+      ]
     },
     {
       "dominio": "Suministros",
@@ -312,9 +312,9 @@
       ],
       "acciones": [
         "Contactar servicio técnico autorizado para resetear contador si corresponde.",
-        "No intentar procedimientos no documentados si está en garantía."
-      ],
-      "recomendada_para_usuario": "Contactar soporte autorizado si la impresora está en garantía."
+        "No intentar procedimientos no documentados si está en garantía.",
+        "Contactar soporte autorizado si la impresora está en garantía."
+      ]
     },
     {
       "dominio": "Mecánica/Atascos",
@@ -340,9 +340,9 @@
       ],
       "acciones": [
         "Apagar la impresora y retirar cuidadosamente el papel atascado según manual.",
-        "Alinear guías de papel y no sobrecargar la bandeja."
-      ],
-      "recomendada_para_usuario": "Retirar papel con cuidado; evitar tirar bruscamente."
+        "Alinear guías de papel y no sobrecargar la bandeja.",
+        "Retirar papel con cuidado; evitar tirar bruscamente."
+      ]
     },
     {
       "dominio": "Mecánica/Atascos",
@@ -368,9 +368,9 @@
       ],
       "acciones": [
         "Comprobar y retirar objetos (clips, etiquetas) en la bandeja; reintentar con una hoja.",
-        "Si persiste, revisar limpieza de rodillos o contactar servicio."
-      ],
-      "recomendada_para_usuario": "Retirar obstrucciones visibles y probar con una sola hoja."
+        "Si persiste, revisar limpieza de rodillos o contactar servicio.",
+        "Retirar obstrucciones visibles y probar con una sola hoja."
+      ]
     },
     {
       "dominio": "Mecánica/Atascos",
@@ -396,9 +396,9 @@
       ],
       "acciones": [
         "Alinear la pila de papel y ajustar guías; probar con otra pila de papel.",
-        "Ajustar tipo de papel en driver si se usa papel grueso."
-      ],
-      "recomendada_para_usuario": "No sobrecargar la bandeja y alinear las guías."
+        "Ajustar tipo de papel en driver si se usa papel grueso.",
+        "No sobrecargar la bandeja y alinear las guías."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -424,9 +424,9 @@
       ],
       "acciones": [
         "Ejecutar limpieza de cabezal y alineación desde utilidades; imprimir página de prueba.",
-        "Si persiste, reemplazar cartucho o revisar tambor si es láser."
-      ],
-      "recomendada_para_usuario": "Ejecutar rutinas de mantenimiento desde software/panel."
+        "Si persiste, reemplazar cartucho o revisar tambor si es láser.",
+        "Ejecutar rutinas de mantenimiento desde software/panel."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -452,9 +452,9 @@
       ],
       "acciones": [
         "Limpiar interior según manual; revisar cartucho/toner por derrames.",
-        "Si hay derrame, limpiar y ejecutar página de limpieza."
-      ],
-      "recomendada_para_usuario": "No tocar tambor a la luz; seguir instrucciones del fabricante."
+        "Si hay derrame, limpiar y ejecutar página de limpieza.",
+        "No tocar tambor a la luz; seguir instrucciones del fabricante."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -480,9 +480,9 @@
       ],
       "acciones": [
         "Verificar cartuchos en sus ranuras; imprimir diagnóstico de colores.",
-        "Si es software, probar imprimir desde otra aplicación."
-      ],
-      "recomendada_para_usuario": "Hacer prueba de colores desde panel o software."
+        "Si es software, probar imprimir desde otra aplicación.",
+        "Hacer prueba de colores desde panel o software."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -508,9 +508,9 @@
       ],
       "acciones": [
         "Reiniciar la impresora y probar con página de prueba simple.",
-        "Si persiste en todos los trabajos, contactar servicio técnico."
-      ],
-      "recomendada_para_usuario": "Probar con documento sencillo (p. ej. Notepad) y reiniciar la impresora."
+        "Si persiste en todos los trabajos, contactar servicio técnico.",
+        "Probar con documento sencillo (p. ej. Notepad) y reiniciar la impresora."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -536,9 +536,9 @@
       ],
       "acciones": [
         "Ajustar tipo y calidad de papel en el driver; imprimir en alta calidad para prueba.",
-        "Si hay duplicado mecánico, sugerir revisión por técnico del fuser/rodillo."
-      ],
-      "recomendada_para_usuario": "Probar con otro tipo de papel y revisar ajustes de impresión."
+        "Si hay duplicado mecánico, sugerir revisión por técnico del fuser/rodillo.",
+        "Probar con otro tipo de papel y revisar ajustes de impresión."
+      ]
     },
     {
       "dominio": "Calidad de Impresión (PQ)",
@@ -564,9 +564,9 @@
       ],
       "acciones": [
         "Comprobar niveles de consumibles; imprimir página de diagnóstico desde panel.",
-        "Si consumibles OK, ejecutar limpieza de cabezales o reinstalar driver; si persiste, servicio técnico."
-      ],
-      "recomendada_para_usuario": "Imprimir página de prueba desde la impresora para aislar el problema."
+        "Si consumibles OK, ejecutar limpieza de cabezales o reinstalar driver; si persiste, servicio técnico.",
+        "Imprimir página de prueba desde la impresora para aislar el problema."
+      ]
     },
     {
       "dominio": "Fallas Críticas/Electrónicas",
@@ -592,9 +592,9 @@
       ],
       "acciones": [
         "Realizar ciclo de energía; si persiste, contactar servicio técnico.",
-        "Registrar patrón de parpadeo para facilitar diagnóstico."
-      ],
-      "recomendada_para_usuario": "No realizar manipulaciones internas; contactar soporte si el reinicio no resuelve."
+        "Registrar patrón de parpadeo para facilitar diagnóstico.",
+        "No realizar manipulaciones internas; contactar soporte si el reinicio no resuelve."
+      ]
     },
     {
       "dominio": "Fallas Críticas/Electrónicas",
@@ -620,9 +620,9 @@
       ],
       "acciones": [
         "Comprobar cable y probar en otra toma; desconectar y reconectar cables.",
-        "Si no enciende, contactar servicio técnico autorizado."
-      ],
-      "recomendada_para_usuario": "Verificar alimentación y evitar abrir la carcasa si está en garantía."
+        "Si no enciende, contactar servicio técnico autorizado.",
+        "Verificar alimentación y evitar abrir la carcasa si está en garantía."
+      ]
     },
     {
       "dominio": "Fallas Críticas/Electrónicas",
@@ -648,9 +648,9 @@
       ],
       "acciones": [
         "Reiniciar impresora y probar imprimir página desde panel; anotar código si aparece.",
-        "Contactar servicio técnico con el código y detalles si el error persiste."
-      ],
-      "recomendada_para_usuario": "Anotar texto/código del error para facilitar soporte."
+        "Contactar servicio técnico con el código y detalles si el error persiste.",
+        "Anotar texto/código del error para facilitar soporte."
+      ]
     },
     {
       "dominio": "Fallas Críticas/Electrónicas",
@@ -676,9 +676,9 @@
       ],
       "acciones": [
         "Comprobar que no haya objetos impidiendo el cierre; asegurar que la tapa esté bien encajada.",
-        "Si sigue detectando abierta, contactar servicio técnico."
-      ],
-      "recomendada_para_usuario": "Revisar cierres y bisagras; no forzar la tapa."
+        "Si sigue detectando abierta, contactar servicio técnico.",
+        "Revisar cierres y bisagras; no forzar la tapa."
+      ]
     }
   ]
 }
